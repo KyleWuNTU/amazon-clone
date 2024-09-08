@@ -1,11 +1,11 @@
-# 使用官方的 OpenJDK 22 基础镜像
+# Use the official OpenJDK 22 base image
 FROM openjdk:22
 
-# 设置工作目录
+# This is the directory where the application will be built
 WORKDIR /app
 
-# 复制 Maven 构建的 JAR 文件到镜像中
+# Copy the JAR file from the Maven build to the image
 COPY target/demo-0.0.1-SNAPSHOT.jar /app/demo-0.0.1-SNAPSHOT.jar
 
-# 指定容器启动时运行的命令
+# Command to run the application
 CMD ["java", "-jar", "/app/demo-0.0.1-SNAPSHOT.jar"]

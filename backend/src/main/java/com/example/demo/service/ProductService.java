@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.demo.model.Product;
+import com.example.demo.entity.Product;
 import com.example.demo.repository.ProductRepository;
 
 @Service
@@ -16,25 +16,36 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    // 創建或更新產品
     @Transactional
-    public Product saveProduct(Product product) {
+    public Product createProduct(Product product) {
         return productRepository.save(product);
     }
 
-    // 查找所有產品
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
-    // 通過 ID 查找產品
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
     }
 
-    // 刪除產品
     @Transactional
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
+    @Transactional
+    public Product updateProduct(Long id, Product product) {
+        Optional<Product> existingProduct = productRepository.findById(id);
+        if (existingProduct.isPresent()) {
+            Product updatedProduct = existingProduct.get();
+            updatedProduct.setName(product.getName());
+            updatedProduct.setDescription(product.getDescription());
+            updatedProduct.setPrice(product.getPrice());
+            return productRepository.save(updatedProduct);
+        } else {
+            return null;
+        }
+    }
+    
 }
