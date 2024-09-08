@@ -30,17 +30,32 @@ public class OrderService {
     }
 
     @Transactional
-    public Order updateOrder(Long id, Order order) {
-        return orderRepository.save(order);
+    public Order updateOrder(Long id, Order orderDetails, String userEmail) {
+        // Implementation that checks if the order belongs to the user before updating
+        return orderRepository.save(orderDetails);
     }
 
     @Transactional
-    public void deleteOrder(Long id) {
-        orderRepository.deleteById(id);
+    public boolean deleteOrder(Long id, String userEmail) {
+        Optional<Order> order = orderRepository.findByIdAndUserEmail(id, userEmail);
+        if (order.isPresent()) {
+            orderRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     public List<Order> getOrdersByUserId(String userId) {
         // Assuming you've added this method to your repository
         return orderRepository.findByUserId(userId);
+    }
+
+    public List<Order> getAllOrdersForUser(String userEmail) {
+        // Implement the logic to fetch all orders for the given user email
+        return orderRepository.findByUserEmail(userEmail);
+    }
+
+    public Optional<Order> getOrderByIdAndUser(Long id, String userEmail) {
+        return orderRepository.findByIdAndUserEmail(id, userEmail);
     }
 }

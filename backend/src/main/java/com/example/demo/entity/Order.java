@@ -18,6 +18,8 @@ public class Order {
     @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
     private List<BasketItem> basket;
 
+    private String userEmail;
+
     // Getters and Setters 
 
     public Long getId() {
@@ -58,5 +60,13 @@ public class Order {
 
     public void setBasket(List<BasketItem> basket) {
         this.basket = basket;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
     }
 }
