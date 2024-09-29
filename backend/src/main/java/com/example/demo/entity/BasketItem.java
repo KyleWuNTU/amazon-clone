@@ -2,6 +2,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Embeddable
+@Table(name = "basket_items")
 public class BasketItem {
     private String id;
     private String title;

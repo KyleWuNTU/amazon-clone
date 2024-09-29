@@ -1,22 +1,31 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import jakarta.persistence.Id;
-
+import java.io.Serializable;
 @Entity
-public class Product {
+@Table(name = "products")
+public class Product implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "price", nullable = false)
     private double price;
+
+    @Column(name = "stock", nullable = false)
     private int stock;
 
-    public Product(){
+    public Product() {
     }
 
     public Product(String name, String description, double price, int stock) {
@@ -59,7 +68,7 @@ public class Product {
         this.price = price;
     }
 
-    public double getStock() {
+    public int getStock() {
         return stock;
     }
 
